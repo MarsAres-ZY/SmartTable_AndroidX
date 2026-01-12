@@ -5,8 +5,8 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
@@ -49,21 +49,22 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
-public class PagerModeActivity extends AppCompatActivity implements View.OnClickListener{
+public class PagerModeActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SmartTable<UserInfo> table;
     private PageTableData<UserInfo> tableData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pager);
-        FontStyle.setDefaultTextSize(DensityUtils.sp2px(this,15)); //设置全局字体大小
+        FontStyle.setDefaultTextSize(DensityUtils.sp2px(this, 15)); //设置全局字体大小
         table = (SmartTable<UserInfo>) findViewById(R.id.table);
         final List<UserInfo> testData = new ArrayList<>();
         Random random = new Random();
-        for(int i = 0;i <500; i++) {
-            testData.add(new UserInfo("用户"+i, random.nextInt(70), System.currentTimeMillis()
-                    - random.nextInt(70)*3600*1000*24,true,new ChildData("测试"+i)));
+        for (int i = 0; i < 500; i++) {
+            testData.add(new UserInfo("用户" + i, random.nextInt(70), System.currentTimeMillis()
+                    - random.nextInt(70) * 3600 * 1000 * 24, true, new ChildData("测试" + i)));
         }
 
         final Column<String> nameColumn = new Column<>("姓名", "name");
@@ -72,20 +73,21 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
         ageColumn.setAutoCount(true);
         Column<String> column4 = new Column<>("测试多重查询", "childData.child");
         column4.setAutoCount(true);
-        final IFormat<Long> format =  new IFormat<Long>() {
+        final IFormat<Long> format = new IFormat<Long>() {
             @Override
             public String format(Long aLong) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(aLong);
-                return calendar.get(Calendar.YEAR)+"-"+(calendar.get(Calendar.MONTH)+1)+"-"+calendar.get(Calendar.DAY_OF_MONTH);
+                return calendar.get(Calendar.YEAR) + "-" + (calendar.get(Calendar.MONTH) + 1) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
             }
         };
-        final Column<Long> timeColumn = new Column<>("时间", "time",format);
+        final Column<Long> timeColumn = new Column<>("时间", "time", format);
         timeColumn.setCountFormat(new ICountFormat<Long, Long>() {
             private long maxTime;
+
             @Override
             public void count(Long aLong) {
-                if(aLong > maxTime){
+                if (aLong > maxTime) {
                     maxTime = aLong;
                 }
             }
@@ -102,11 +104,11 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             public void clearCount() {
-                maxTime =0;
+                maxTime = 0;
             }
         });
-        int size = DensityUtils.dp2px(this,15);
-        Column<Boolean> column5 = new Column<>("勾选1", "isCheck", new ImageResDrawFormat<Boolean>(size,size) {
+        int size = DensityUtils.dp2px(this, 15);
+        Column<Boolean> column5 = new Column<>("勾选1", "isCheck", new ImageResDrawFormat<Boolean>(size, size) {
             @Override
             protected Context getContext() {
                 return PagerModeActivity.this;
@@ -114,13 +116,13 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             protected int getResourceID(Boolean isCheck, String value, int position) {
-                if(isCheck){
+                if (isCheck) {
                     return R.mipmap.check;
                 }
                 return 0;
             }
         });
-        Column<Boolean> column6 = new Column<>("勾选2", "isCheck", new TextImageDrawFormat<Boolean>(size,size, TextImageDrawFormat.LEFT,10) {
+        Column<Boolean> column6 = new Column<>("勾选2", "isCheck", new TextImageDrawFormat<Boolean>(size, size, TextImageDrawFormat.LEFT, 10) {
             @Override
             protected Context getContext() {
                 return PagerModeActivity.this;
@@ -128,13 +130,13 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             protected int getResourceID(Boolean isCheck, String value, int position) {
-                if(isCheck){
+                if (isCheck) {
                     return R.mipmap.clock_fill;
                 }
                 return 0;
             }
         });
-        Column<Boolean> column7 = new Column<>("勾选3", "isCheck", new TextImageDrawFormat<Boolean>(size,size, TextImageDrawFormat.RIGHT,10) {
+        Column<Boolean> column7 = new Column<>("勾选3", "isCheck", new TextImageDrawFormat<Boolean>(size, size, TextImageDrawFormat.RIGHT, 10) {
             @Override
             protected Context getContext() {
                 return PagerModeActivity.this;
@@ -142,13 +144,13 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             protected int getResourceID(Boolean isCheck, String value, int position) {
-                if(isCheck){
+                if (isCheck) {
                     return R.mipmap.activity_fill;
                 }
                 return 0;
             }
         });
-        Column<Boolean> column8 = new Column<>("勾选4", "isCheck", new TextImageDrawFormat<Boolean>(size,size, TextImageDrawFormat.TOP,10) {
+        Column<Boolean> column8 = new Column<>("勾选4", "isCheck", new TextImageDrawFormat<Boolean>(size, size, TextImageDrawFormat.TOP, 10) {
             @Override
             protected Context getContext() {
                 return PagerModeActivity.this;
@@ -156,13 +158,13 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             protected int getResourceID(Boolean isCheck, String value, int position) {
-                if(isCheck){
+                if (isCheck) {
                     return R.mipmap.brush_fill;
                 }
                 return 0;
             }
         });
-        Column<Boolean> column9 = new Column<>("勾选5", "isCheck", new TextImageDrawFormat<Boolean>(size,size, TextImageDrawFormat.BOTTOM,10) {
+        Column<Boolean> column9 = new Column<>("勾选5", "isCheck", new TextImageDrawFormat<Boolean>(size, size, TextImageDrawFormat.BOTTOM, 10) {
             @Override
             protected Context getContext() {
                 return PagerModeActivity.this;
@@ -170,20 +172,20 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             protected int getResourceID(Boolean isCheck, String value, int position) {
-                if(isCheck){
+                if (isCheck) {
                     return R.mipmap.collection_fill;
                 }
                 return 0;
             }
         });
-        Column totalColumn1 = new Column("总项1",nameColumn,ageColumn);
-        Column totalColumn2 = new Column("总项2",nameColumn,ageColumn,timeColumn);
-        Column totalColumn = new Column("总项",nameColumn,totalColumn1,totalColumn2,timeColumn);
+        Column totalColumn1 = new Column("总项1", nameColumn, ageColumn);
+        Column totalColumn2 = new Column("总项2", nameColumn, ageColumn, timeColumn);
+        Column totalColumn = new Column("总项", nameColumn, totalColumn1, totalColumn2, timeColumn);
 
-       tableData = new PageTableData<>("测试",testData,nameColumn,column4,column5,column6,column7,column8,column9,totalColumn,totalColumn1,totalColumn2,timeColumn);
+        tableData = new PageTableData<>("测试", testData, nameColumn, column4, column5, column6, column7, column8, column9, totalColumn, totalColumn1, totalColumn2, timeColumn);
 
 
-        tableData.setTitleDrawFormat(new TitleImageDrawFormat(size,size, TitleImageDrawFormat.RIGHT,10) {
+        tableData.setTitleDrawFormat(new TitleImageDrawFormat(size, size, TitleImageDrawFormat.RIGHT, 10) {
             @Override
             protected Context getContext() {
                 return PagerModeActivity.this;
@@ -191,31 +193,31 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
 
             @Override
             protected int getResourceID(Column column) {
-                if(!column.isParent()){
-                    if(tableData.getSortColumn() == column){
+                if (!column.isParent()) {
+                    if (tableData.getSortColumn() == column) {
                         setDirection(TextImageDrawFormat.RIGHT);
-                        if(column.isReverseSort()){
+                        if (column.isReverseSort()) {
                             return R.mipmap.sort_up;
                         }
                         return R.mipmap.sort_down;
 
-                    }else{
+                    } else {
                         setDirection(TextImageDrawFormat.LEFT);
-                        if(column == nameColumn){
+                        if (column == nameColumn) {
                             return R.mipmap.name;
-                        }else if(column == ageColumn){
+                        } else if (column == ageColumn) {
                             return R.mipmap.age;
-                        }else if(column == timeColumn){
+                        } else if (column == timeColumn) {
                             return R.mipmap.update;
                         }
                     }
                     return 0;
                 }
                 setDirection(TextImageDrawFormat.LEFT);
-                int level = tableData.getTableInfo().getMaxLevel()-column.getLevel();
-                if(level ==0){
+                int level = tableData.getTableInfo().getMaxLevel() - column.getLevel();
+                if (level == 0) {
                     return R.mipmap.level1;
-                }else if(level ==1){
+                } else if (level == 1) {
                     return R.mipmap.level2;
                 }
                 return 0;
@@ -224,7 +226,7 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
         ageColumn.setOnColumnItemClickListener(new OnColumnItemClickListener<Integer>() {
             @Override
             public void onClick(Column<Integer> column, String value, Integer integer, int position) {
-                Toast.makeText(PagerModeActivity.this,"点击了"+value,Toast.LENGTH_SHORT).show();
+                Toast.makeText(PagerModeActivity.this, "点击了" + value, Toast.LENGTH_SHORT).show();
             }
         });
         tableData.setShowCount(true);
@@ -232,50 +234,51 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
                 .setShowXSequence(false).setShowYSequence(false);
         FontStyle fontStyle = new FontStyle();
         fontStyle.setTextColor(getResources().getColor(android.R.color.white));
-        MultiLineBubbleTip<Column> tip = new MultiLineBubbleTip<Column>(this,R.mipmap.round_rect,R.mipmap.triangle,fontStyle) {
+        MultiLineBubbleTip<Column> tip = new MultiLineBubbleTip<Column>(this, R.mipmap.round_rect, R.mipmap.triangle, fontStyle) {
             @Override
             public boolean isShowTip(Column column, int position) {
-                if(column == nameColumn){
+                if (column == nameColumn) {
                     return true;
                 }
                 return false;
             }
+
             @Override
             public String[] format(Column column, int position) {
                 UserInfo data = testData.get(position);
-                String[] strings = {"批注","姓名："+data.getName(),"年龄："+data.getAge()};
+                String[] strings = {"批注", "姓名：" + data.getName(), "年龄：" + data.getAge()};
                 return strings;
             }
         };
         tip.setColorFilter(Color.parseColor("#FA8072"));
         tip.setAlpha(0.8f);
         table.getProvider().setTip(tip);
-        table.setSortColumn(ageColumn,false);
+        table.setSortColumn(ageColumn, false);
         ageColumn.setComparator(new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
-                return o1- o2;
+                return o1 - o2;
             }
         });
         table.setOnColumnClickListener(new OnColumnClickListener() {
             @Override
             public void onClick(ColumnInfo columnInfo) {
-                if(!columnInfo.column.isParent()) {
+                if (!columnInfo.column.isParent()) {
 
-                    if(columnInfo.column == ageColumn){
-                        showChartDialog(tableData.getTableName(),nameColumn.getDatas(),ageColumn.getDatas());
-                    }else{
+                    if (columnInfo.column == ageColumn) {
+                        showChartDialog(tableData.getTableName(), nameColumn.getDatas(), ageColumn.getDatas());
+                    } else {
                         table.setSortColumn(columnInfo.column, !columnInfo.column.isReverseSort());
                     }
                 }
-                Toast.makeText(PagerModeActivity.this,"点击了"+columnInfo.column.getColumnName(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(PagerModeActivity.this, "点击了" + columnInfo.column.getColumnName(), Toast.LENGTH_SHORT).show();
             }
         });
-        table.getConfig().setTableTitleStyle(new FontStyle(this,15,getResources().getColor(R.color.arc1)));
+        table.getConfig().setTableTitleStyle(new FontStyle(this, 15, getResources().getColor(R.color.arc1)));
         table.getConfig().setContentCellBackgroundFormat(new BaseCellBackgroundFormat<CellInfo>() {
             @Override
             public int getBackGroundColor(CellInfo cellInfo) {
-                if(cellInfo.row %2 ==0) {
+                if (cellInfo.row % 2 == 0) {
                     return ContextCompat.getColor(PagerModeActivity.this, R.color.content_bg);
                 }
                 return TableConfig.INVALID_COLOR;
@@ -289,53 +292,51 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.left:
-                tableData.setCurrentPage(tableData.getCurrentPage()-1);
-                table.notifyDataChanged();
-                break;
-            case R.id.right:
-                tableData.setCurrentPage(tableData.getCurrentPage()+1);
-                table.notifyDataChanged();
-                break;
+        int id = view.getId();
+        if (id == R.id.left) {
+            tableData.setCurrentPage(tableData.getCurrentPage() - 1);
+            table.notifyDataChanged();
+        } else if (id == R.id.right) {
+            tableData.setCurrentPage(tableData.getCurrentPage() + 1);
+            table.notifyDataChanged();
         }
 
 
     }
 
 
-
     /**
      * 测试是否可以兼容之前smartChart
+     *
      * @param tableName
      * @param chartYDataList
      * @param list
      */
-    private void showChartDialog(String tableName,List<String> chartYDataList,List<Integer> list ){
-        View chartView = View.inflate(this,R.layout.dialog_chart,null);
+    private void showChartDialog(String tableName, List<String> chartYDataList, List<Integer> list) {
+        View chartView = View.inflate(this, R.layout.dialog_chart, null);
         LineChart lineChart = (LineChart) chartView.findViewById(R.id.lineChart);
         lineChart.setLineModel(LineChart.CURVE_MODEL);
         Resources res = getResources();
-        com.daivd.chart.data.style.FontStyle.setDefaultTextSpSize(this,12);
+        com.daivd.chart.data.style.FontStyle.setDefaultTextSpSize(this, 12);
         List<LineData> ColumnDatas = new ArrayList<>();
         ArrayList<Double> tempList1 = new ArrayList<>();
         ArrayList<String> ydataList = new ArrayList<>();
-        for(int i = 0;i <30;i++){
+        for (int i = 0; i < 30; i++) {
             String value = chartYDataList.get(i);
             ydataList.add(value);
         }
-        for(int i = 0;i <30;i++){
+        for (int i = 0; i < 30; i++) {
             int value = list.get(i);
             tempList1.add(Double.valueOf(value));
         }
-        LineData columnData1 = new LineData(tableName,"", IAxis.AxisDirection.LEFT,getResources().getColor(R.color.arc1),tempList1);
+        LineData columnData1 = new LineData(tableName, "", IAxis.AxisDirection.LEFT, getResources().getColor(R.color.arc1), tempList1);
         ColumnDatas.add(columnData1);
-        ChartData<LineData> chartData2 = new ChartData<>("Area Chart",ydataList,ColumnDatas);
+        ChartData<LineData> chartData2 = new ChartData<>("Area Chart", ydataList, ColumnDatas);
         lineChart.getChartTitle().setDirection(IComponent.TOP);
         lineChart.getLegend().setDirection(IComponent.BOTTOM);
         lineChart.setLineModel(LineChart.CURVE_MODEL);
-        BaseAxis verticalAxis =  lineChart.getLeftVerticalAxis();
-        BaseAxis horizontalAxis=  lineChart.getHorizontalAxis();
+        BaseAxis verticalAxis = lineChart.getLeftVerticalAxis();
+        BaseAxis horizontalAxis = lineChart.getHorizontalAxis();
         //设置竖轴方向
         verticalAxis.setAxisDirection(IAxis.AxisDirection.LEFT);
         //设置网格
@@ -344,10 +345,10 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
         horizontalAxis.setAxisDirection(IAxis.AxisDirection.BOTTOM);
         horizontalAxis.setDrawGrid(true);
         //设置线条样式
-        verticalAxis.getAxisStyle().setWidth(this,1);
-        DashPathEffect effects = new DashPathEffect(new float[] { 1, 2, 4, 8}, 1);
-        verticalAxis.getGridStyle().setWidth(this,1).setColor(res.getColor(R.color.arc_text)).setEffect(effects);
-        horizontalAxis.getGridStyle().setWidth(this,1).setColor(res.getColor(R.color.arc_text)).setEffect(effects);
+        verticalAxis.getAxisStyle().setWidth(this, 1);
+        DashPathEffect effects = new DashPathEffect(new float[]{1, 2, 4, 8}, 1);
+        verticalAxis.getGridStyle().setWidth(this, 1).setColor(res.getColor(R.color.arc_text)).setEffect(effects);
+        horizontalAxis.getGridStyle().setWidth(this, 1).setColor(res.getColor(R.color.arc_text)).setEffect(effects);
         lineChart.setZoom(true);
         //开启十字架
         lineChart.getProvider().setOpenCross(true);
@@ -363,10 +364,10 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
         //设置标题样式
         com.daivd.chart.data.style.FontStyle fontStyle = lineChart.getChartTitle().getFontStyle();
         fontStyle.setTextColor(res.getColor(R.color.arc_temp));
-        fontStyle.setTextSpSize(this,15);
+        fontStyle.setTextSpSize(this, 15);
         LevelLine levelLine = new LevelLine(30);
-        DashPathEffect effects2 = new DashPathEffect(new float[] { 1, 2,2,4}, 1);
-        levelLine.getLineStyle().setWidth(this,1).setColor(res.getColor(R.color.arc23)).setEffect(effects);
+        DashPathEffect effects2 = new DashPathEffect(new float[]{1, 2, 2, 4}, 1);
+        levelLine.getLineStyle().setWidth(this, 1).setColor(res.getColor(R.color.arc23)).setEffect(effects);
         levelLine.getLineStyle().setEffect(effects2);
         lineChart.getProvider().addLevelLine(levelLine);
         Point legendPoint = (Point) lineChart.getLegend().getPoint();
@@ -376,7 +377,7 @@ public class PagerModeActivity extends AppCompatActivity implements View.OnClick
         lineChart.getHorizontalAxis().setRotateAngle(90);
         lineChart.setChartData(chartData2);
         lineChart.startChartAnim(400);
-        BaseDialog dialog = new  BaseDialog.Builder(this).setFillWidth(true).setContentView(chartView).create();
+        BaseDialog dialog = new BaseDialog.Builder(this).setFillWidth(true).setContentView(chartView).create();
         dialog.show();
     }
 

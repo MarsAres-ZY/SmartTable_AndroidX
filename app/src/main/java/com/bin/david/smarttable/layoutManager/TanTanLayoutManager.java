@@ -1,9 +1,8 @@
 package com.bin.david.smarttable.layoutManager;
-
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.LayoutManager;
 import android.util.SparseArray;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.HashMap;
 
@@ -11,7 +10,7 @@ import java.util.HashMap;
  * Created by huang on 2017/11/9.
  */
 
-public class TanTanLayoutManager extends LayoutManager {
+public class TanTanLayoutManager extends RecyclerView.LayoutManager {
 
     public static final int MAX_SHOW_COUNT = 4;
     public static final float SCALE = 0.05f;

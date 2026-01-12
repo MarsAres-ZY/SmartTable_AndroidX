@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <!--防止内容被遮挡但侵入状态栏-->
+        <item name="android:fitsSystemWindows">true</item>
     </style>
     <!--分割线-->
     <style name="Divider">

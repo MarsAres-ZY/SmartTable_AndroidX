@@ -1,7 +1,8 @@
 package com.bin.david.smarttable;
 
-import android.app.Application;
 import android.content.Context;
+
+import androidx.multidex.MultiDexApplication;
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
@@ -17,11 +18,12 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 
+
 /**
  * Created by huang on 2017/11/4.
  */
 
-public class BaseApplication extends android.support.multidex.MultiDexApplication {
+public class BaseApplication extends MultiDexApplication {
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器

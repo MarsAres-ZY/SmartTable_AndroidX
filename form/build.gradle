@@ -1,20 +1,16 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
 
-group='com.github.huangyanbin'
+group = 'com.github.huangyanbin'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
-
-
+    compileSdkVersion 33
+    namespace 'com.github.huangyanbin.form'
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 25
+        minSdkVersion 21
+        targetSdkVersion 33
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -24,8 +20,6 @@ android {
     }
 }
 
-
-
 tasks.withType(JavaCompile) {
     options.encoding = "UTF-8"
 }
@@ -33,27 +27,15 @@ tasks.withType(JavaCompile) {
 // 打包源码
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
+    archiveClassifier = 'sources'
 }
 
-task javadoc(type: Javadoc) {
-    failOnError  false
-    javadoc.options.encoding = "UTF-8"
-    source = android.sourceSets.main.java.sourceFiles
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
-}
 
-// 制作文档(Javadoc)
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
 
 artifacts {
     archives sourcesJar
-    archives javadocJar
 }
 
 dependencies {
+    // 可根据需要添加依赖
 }
